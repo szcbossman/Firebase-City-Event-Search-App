@@ -1,6 +1,7 @@
 package com.laioffer.eventreporter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
@@ -184,6 +185,8 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         holder.time.setText(Utils.timeTransformer(event.getTime()));
         holder.good_number.setText(String.valueOf(event.getLike()));
 
+        holder.comment_number.setText(String.valueOf(event.getCommentNumber()));
+
         if (event.getImgUri() != null) {
             final String url = event.getImgUri();
             holder.imgview.setVisibility(View.VISIBLE);
@@ -226,6 +229,17 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 });
             }
         });
+
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, CommentActivity.class);
+                String eventId = event.getId();
+                intent.putExtra("EventID", eventId);
+                context.startActivity(intent);
+            }
+        });
+
 
     }
 
